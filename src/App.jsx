@@ -1,6 +1,6 @@
 import OrderForm from "./components/OrderForm";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Components/index.css";
+import "./components/index.css";
 import Header from "./components/Header";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Success from "./components/Success";
