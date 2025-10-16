@@ -9,12 +9,17 @@ import { useState } from "react";
 
 function App() {
   const [apiResponse, setApiResponse] = useState([]);
-
   let history = useHistory();
+
+  const headers = {
+    "x-api-key": "reqres-free-v1",
+    "Content-Type": "application/json"
+  };
+
   const handleSubmit = (form, isValid) => {
     if (isValid) {
       axios
-        .post("https://reqres.in/api/pizza", form)
+        .post("https://reqres.in/api/pizza", form, { headers: headers })
         .then((response) => {
           setApiResponse([response.data]);
           history.push("/success");
