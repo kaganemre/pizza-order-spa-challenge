@@ -1,32 +1,30 @@
-# 🍕 Pizza Ordering App  
-**React + Vite** ile geliştirilmiş, kullanıcıların pizza siparişi verebildiği, modern ve etkileşimli bir SPA uygulamasıdır.
+# 🍕 Pizza Ordering App
+A modern and interactive **SPA (Single Page Application)** built with **React + Vite**, where users can place pizza orders.
+
+## 🚀 Project Overview  
+
+A **single page application (SPA)** that allows users to create pizza orders by selecting the pizza size, dough type, and additional toppings.  
+A **realistic order flow** is simulated using form validation and a fake (mock) API integration.
+
+🎯 **Goal:**  
+To demonstrate user-friendly form handling and state management using modern React practices.
 
 ---
 
-## 🚀 Proje Özeti  
+## 🧱 Technologies Used  
 
-Kullanıcıların pizza boyutu, hamur ve ek malzemeleri seçerek sipariş oluşturabildiği bir **tek sayfa uygulamasıdır (SPA)**.  
-Form doğrulama ve sahte API entegrasyonu (mock API) kullanılarak **gerçek bir sipariş akışı** simüle edilir.  
-
-🎯 **Amaç:**  
-Modern React yapısıyla kullanıcı dostu form ve state yönetimi örneği sunmak.
-
----
-
-## 🧱 Kullanılan Teknolojiler  
-
-| Teknoloji | Açıklama |
-|------------|-----------|
-|⚛️ **React** | Kullanıcı arayüzü oluşturma |
-| 🚀 **Vite** | Hızlı geliştirme ortamı ve derleme aracı |
-| 🔗 **Axios** | HTTP istekleri |
-| 🌐 **React Router** | Sayfa yönlendirmeleri |
-| 💅 **CSS / SASS** | Stil düzeni |
-| 📜 **JavaScript (ES6+)** | Geliştirme dili |
+| Technology | Description |
+|------------|-------------|
+| ⚛️ **React** | Building the user interface |
+| 🚀 **Vite** | Fast development environment and build tool |
+| 🔗 **Axios** | Handling HTTP requests |
+| 🌐 **React Router** | Client-side routing |
+| 💅 **CSS / SASS** | Styling |
+| 📜 **JavaScript (ES6+)** | Programming language |
 
 ---
 
-## 🗂 Proje Yapısı
+## 🗂 Project Structure
  
 ```
 📦 root
@@ -59,45 +57,42 @@ Modern React yapısıyla kullanıcı dostu form ve state yönetimi örneği sunm
 
 ---
 
-## 🧩 Bileşenler & Mimari
+## 🧩 Components & Architecture
 
-### 🧱 Temel Yapı
+### 🧱 Core Components
 
-Header → Logo ve navigasyon
+- **Header** → Logo and navigation  
+- **OrderForm** → Order form component (name, size, dough, toppings, special notes)  
+- **Success** → Displays the order summary  
 
-OrderForm → Form bileşeni (isim, boyut, hamur, malzeme, özel not)
+###	🧭 Data Flow
 
-Success → Sipariş özeti gösterimi
-
-###	🧭 Veri Akışı
-
-Form verilerinin yönetimi için React'ın useState hook'u kullanılmıştır.
-
-Submit işlemi sonrası form verisi `onSubmit` prop’u aracılığıyla `App.jsx`’e aktarılır.
-
-onSubmit fonksiyonu, form verilerini mock API'ye axios.post("https://reqres.in/api/pizza", payload) ile gönderir.
-
-Başarılı yanıt alındığında kullanıcı `/success`  sayfasına yönlendirilir ve `Success` bileşeni render edilir.
+- React’s `useState` hook is used to manage form data.
+- After form submission, the form data is passed to `App.jsx` via the `onSubmit` prop.
+- The `onSubmit` function sends the form data to a mock API using  
+  `axios.post("https://reqres.in/api/pizza", payload)`.
+- Upon a successful response, the user is redirected to the `/success` page, where the `Success` component is rendered.
 
 ---
 
-## 🧭 Veri Yönetimi Notu
+## 🧠 State Management Note
 
-Bu projede form verisi OrderForm bileşeninden App.jsx'e prop lifting yöntemiyle aktarılmıştır. Uygulama küçük ölçekli olduğu ve yalnızca tek yönlü veri akışı gerektiği için global state yönetimi tercih edilmemiştir.
+In this project, form data is lifted from the `OrderForm` component to `App.jsx` using **prop lifting**.  
+Since the application is small-scale and requires only one-way data flow, a global state management solution was not used.
 
-Daha büyük projelerde Context API veya Redux Toolkit gibi çözümlerle prop drilling önlenebilir ve daha sürdürülebilir bir yapı kurulabilir.
+For larger applications, tools such as **Context API** or **Redux Toolkit** can be introduced to prevent prop drilling and create a more scalable and maintainable architecture.
 
 ---
 
-## 📦 Kurulum ve Çalıştırma
+## 📦 Installation & Running the App
 
-### Bağımlılıkları yükleme:
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-### Uygulamayı çalıştırma:
+### Run the application
 
 ```bash
 npm run dev
@@ -105,14 +100,14 @@ npm run dev
 
 ---
 
-## 🌐 Canlı
+## 🌐 Live Demo
 
-🔗 [Canlı Uygulama - Vercel](https://fsweb-s8-challenge-pizza-mauve.vercel.app/)
+🔗 [Live Application - Vercel](https://fsweb-s8-challenge-pizza-mauve.vercel.app/)
 
 ---
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje, Workintech tarafından sunulan [fsweb-s8-challenge-pizza](https://github.com/Workintech/fsweb-s8-challenge-pizza) kriterlerine uygun şekilde, **Figma tasarımı referans alınarak sıfırdan geliştirilmiştir.**  
-Kodlar tamamen tarafımdan yazılmıştır.  
-MIT lisansı ile paylaşılmıştır.
+This project was developed from scratch in accordance with the requirements of [fsweb-s8-challenge-pizza](https://github.com/Workintech/fsweb-s8-challenge-pizza) provided by Workintech, using the Figma design as a reference.
+
+All code was written by me and is shared under the MIT License.
