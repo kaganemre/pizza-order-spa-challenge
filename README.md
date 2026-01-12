@@ -1,4 +1,11 @@
 # 🍕 Pizza Ordering App
+
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![SPA](https://img.shields.io/badge/Application-SPA-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
+![License](https://img.shields.io/github/license/kaganemre/pizza-order-spa-challenge)
+
 A modern and interactive **SPA (Single Page Application)** built with **React + Vite**, where users can place pizza orders.
 
 ## 🚀 Project Overview  
