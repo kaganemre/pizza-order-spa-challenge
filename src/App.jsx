@@ -6,6 +6,8 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import Success from "./components/Success";
 import axios from "axios";
 import { useState } from "react";
+import HomePage from "./pages/HomePage";
+import SuccessPage from "./pages/SuccessPage";
 
 function App() {
   const [apiResponse, setApiResponse] = useState([]);
@@ -31,11 +33,10 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <Header />
-        <OrderForm onSubmit={handleSubmit} />
+        <HomePage onSubmit={handleSubmit} />
       </Route>
       <Route path="/success">
-        <Success apiResponse={apiResponse} />
+        <SuccessPage apiResponse={apiResponse} />
       </Route>
     </Switch>
   );
