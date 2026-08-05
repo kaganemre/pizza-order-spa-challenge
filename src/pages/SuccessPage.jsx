@@ -1,3 +1,3 @@
-export default function SuccessPage() {
-    return null;
+export default function SuccessPage({ apiResponse }) {
+    return <Success apiResponse={apiResponse} />
 }
