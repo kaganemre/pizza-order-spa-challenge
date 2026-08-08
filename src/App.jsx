@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import SuccessPage from "./pages/SuccessPage";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   const [apiResponse, setApiResponse] = useState([]);
@@ -33,7 +34,9 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <HomePage onSubmit={handleSubmit} />
+        <MainLayout>
+          <HomePage onSubmit={handleSubmit} />
+        </MainLayout>
       </Route>
       <Route path="/success">
         <SuccessPage apiResponse={apiResponse} />

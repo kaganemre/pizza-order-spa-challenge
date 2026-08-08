@@ -1,3 +1,10 @@
+import Header from "../components/Header";
+
 export default function MainLayout({ children }) {
-    return <>{children}</>;
+    return (
+        <>
+            <Header />
+            {children}
+        </>
+    );
 }
