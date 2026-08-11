@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import { useHistory } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import Success from "./components/Success";
-import axios from "axios";
+import { createPizzaOrder } from "./services/pizzaService";
 import { useState } from "react";
 
 function App() {
@@ -19,14 +19,12 @@ function App() {
 
   const handleSubmit = (form, isValid) => {
     if (isValid) {
-      axios
-        .post("https://reqres.in/api/pizza", form, { headers: headers })
+      createPizzaOrder(form)
         .then((response) => {
           setApiResponse([response.data]);
           history.push("/success");
         })
         .catch((error) => console.log(error));
-
     }
   };
 
