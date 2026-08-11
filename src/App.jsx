@@ -2,20 +2,18 @@ import OrderForm from "./components/OrderForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./components/index.css";
 import Header from "./components/Header";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 import Success from "./components/Success";
 import axios from "axios";
 import { useState } from "react";
-import HomePage from "./pages/HomePage";
-import SuccessPage from "./pages/SuccessPage";
-import MainLayout from "./layouts/MainLayout";
 
 function App() {
   const [apiResponse, setApiResponse] = useState([]);
   let history = useHistory();
 
   const headers = {
-    "x-api-key": "reqres-free-v1",
+    "x-api-key": "YOUR_API_KEY",
     "Content-Type": "application/json"
   };
 
@@ -28,20 +26,15 @@ function App() {
           history.push("/success");
         })
         .catch((error) => console.log(error));
+
     }
   };
 
   return (
-    <Switch>
-      <Route exact path="/">
-        <MainLayout>
-          <HomePage onSubmit={handleSubmit} />
-        </MainLayout>
-      </Route>
-      <Route path="/success">
-        <SuccessPage apiResponse={apiResponse} />
-      </Route>
-    </Switch>
+    <AppRoutes
+      onSubmit={handleSubmit}
+      apiResponse={apiResponse}
+    />
   );
 }
 
