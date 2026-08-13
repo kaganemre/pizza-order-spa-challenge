@@ -38,7 +38,6 @@ const boyut = ["Küçük", "Orta", "Büyük"];
 export default function OrderForm({ onSubmit }) {
   const [form, setForm] = useState(formData);
   const [malzemeler, setMalzemeler] = useState(malzemeListe);
-  const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({
     isim: null,
     malzeme: true,
@@ -83,10 +82,7 @@ export default function OrderForm({ onSubmit }) {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: isValid }));
   };
 
-  useEffect(() => {
-    const validation = Object.values(errors).every((err) => err === true);
-    setIsValid(validation);
-  }, [form]);
+  const isValid = Object.values(errors).every(Boolean);
 
   useEffect(() => {
     const secimler = malzemeler.filter((m) => m.isChecked).length * 5;
