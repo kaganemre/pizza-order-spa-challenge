@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input, FormFeedback } from "reactstrap";
 
 const malzemeListe = [
@@ -25,9 +25,8 @@ const formData = {
   isim: "",
   not: "",
   adet: 1,
-  secimler: 0,
-  toplam: 0,
 };
+
 const errorMessages = {
   isim: "En az 3 karakter içermelidir.",
   malzeme: "Malzeme en az 4 en fazla da 10 adet seçilebilir.",
@@ -84,15 +83,11 @@ export default function OrderForm({ onSubmit }) {
 
   const isValid = Object.values(errors).every(Boolean);
 
-  useEffect(() => {
-    const secimler = malzemeler.filter((m) => m.isChecked).length * 5;
-    const toplam = secimler + 85.5 * form.adet;
-    setForm((prevForm) => ({
-      ...prevForm,
-      secimler: secimler,
-      toplam: toplam,
-    }));
-  }, [form.malzeme, form.adet]);
+  const selectedIngredientCount = malzemeler.filter(ingredient => ingredient.isChecked).length;
+
+  const ingredientPrice = selectedIngredientCount * 5;
+
+  const totalPrice = ingredientPrice + 85.5 * form.adet;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -252,14 +247,14 @@ export default function OrderForm({ onSubmit }) {
                       <div className="d-flex mb-2">
                         <span className="me-5 pr-50">Seçimler</span>
                         <span>
-                          {form.secimler}
+                          {ingredientPrice}
                           &#8378;
                         </span>
                       </div>
                       <div className="d-flex f-weight">
                         <span className="me-5 red-special pr-60">Toplam</span>
                         <span className="red-special">
-                          {form.toplam}
+                          {totalPrice}
                           &#8378;
                         </span>
                       </div>
