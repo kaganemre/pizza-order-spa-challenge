@@ -41,16 +41,17 @@ export default function OrderForm({ onSubmit }) {
     isim: null,
     malzeme: true,
   });
+
+  const handleQuantityChange = (event) => {
+    const { id } = event.target;
+
+    const value = id === "increase" ? form.adet + 1 : form.adet > 1 ? form.adet - 1 : 1;
+
+    setForm({ ...form, adet: value });
+  }
+
   const handleChange = (event) => {
     let { id, name, value, type, checked } = event.target;
-
-    if (id === "increase") {
-      value = form.adet + 1;
-    }
-
-    if (id === "decrease") {
-      value = form.adet > 1 ? form.adet - 1 : 1;
-    }
 
     if (type === "checkbox") {
       const mListe = [...malzemeler];
@@ -60,7 +61,9 @@ export default function OrderForm({ onSubmit }) {
         ...mListe[mIndex],
         isChecked: checked,
       };
+
       setMalzemeler([...mListe]);
+
       value = mListe.filter((m) => m.isChecked === true);
     }
 
@@ -277,7 +280,7 @@ export default function OrderForm({ onSubmit }) {
                       className="btn btn-warning radius-left f-weight"
                       style={{ width: "50px", height: "50px" }}
                       value={form.adet}
-                      onClick={handleChange}
+                      onClick={handleQuantityChange}
                     >
                       -
                     </button>
@@ -301,7 +304,7 @@ export default function OrderForm({ onSubmit }) {
                       className="btn btn-warning radius-right f-weight"
                       style={{ width: "50px", height: "50px" }}
                       value={form.adet}
-                      onClick={handleChange}
+                      onClick={handleQuantityChange}
                     >
                       +
                     </button>
