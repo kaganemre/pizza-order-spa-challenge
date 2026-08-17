@@ -50,24 +50,36 @@ export default function OrderForm({ onSubmit }) {
     setForm({ ...form, adet: value });
   }
 
+  const handleIngredientChange = (event) => {
+    const { value, checked } = event.target;
+
+    const updatedIngredients = [...malzemeler];
+    const ingredientIndex = updatedIngredients.findIndex((ingredient) => ingredient.malzeme === value);
+
+    updatedIngredients[ingredientIndex] = {
+      ...updatedIngredients[ingredientIndex],
+      isChecked: checked,
+    };
+
+    setMalzemeler(updatedIngredients);
+
+    const selectedIngredients = updatedIngredients.filter(
+      (ingredient) => ingredient.isChecked
+    );
+
+    setForm({
+      ...form,
+      malzeme: selectedIngredients,
+    });
+
+    validateField("malzeme", selectedIngredients);
+  };
+
   const handleChange = (event) => {
-    let { id, name, value, type, checked } = event.target;
-
-    if (type === "checkbox") {
-      const mListe = [...malzemeler];
-      const mIndex = mListe.findIndex((m) => m.malzeme === value);
-
-      mListe[mIndex] = {
-        ...mListe[mIndex],
-        isChecked: checked,
-      };
-
-      setMalzemeler([...mListe]);
-
-      value = mListe.filter((m) => m.isChecked === true);
-    }
+    const { name, value } = event.target;
 
     setForm({ ...form, [name]: value });
+
     validateField(name, value);
   };
 
@@ -188,7 +200,7 @@ export default function OrderForm({ onSubmit }) {
                         id={m.malzeme}
                         name="malzeme"
                         value={m.malzeme}
-                        onChange={handleChange}
+                        onChange={handleIngredientChange}
                         checked={m.isChecked}
                       />
                       <label htmlFor={m.malzeme} className="ms-3">
