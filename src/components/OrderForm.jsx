@@ -83,14 +83,21 @@ export default function OrderForm({ onSubmit }) {
     validateField(name, value);
   };
 
+  const validateName = value => {
+    return value.trim().length >= 3;
+  }
+
+  const validateIngredients = value => {
+    return value.length >= 4 && value.length <= 10;
+  }
+
   const validateField = (name, value) => {
-    let isValid;
+    let isValid = true;
+
     if (name === "isim") {
-      isValid = value.trim().length >= 3;
+      isValid = validateName(value);
     } else if (name === "malzeme") {
-      isValid = value.length >= 4 && value.length <= 10;
-    } else {
-      isValid = true;
+      isValid = validateIngredients(value);
     }
 
     setErrors((prevErrors) => ({ ...prevErrors, [name]: isValid }));
