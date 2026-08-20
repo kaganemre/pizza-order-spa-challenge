@@ -1,3 +1,4 @@
+import { validateName, validateIngredients } from "../validators/orderValidator";
 import React, { useState } from "react";
 import { Input, FormFeedback } from "reactstrap";
 
@@ -82,14 +83,6 @@ export default function OrderForm({ onSubmit }) {
 
     validateField(name, value);
   };
-
-  const validateName = value => {
-    return value.trim().length >= 3;
-  }
-
-  const validateIngredients = value => {
-    return value.length >= 4 && value.length <= 10;
-  }
 
   const validateField = (name, value) => {
     let isValid = true;
