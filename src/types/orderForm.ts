@@ -12,3 +12,7 @@ export interface OrderFormData {
   not: string;
   adet: number;
 }
+
+export interface OrderFormProps {
+  onSubmit: (form: OrderFormData, isValid: boolean) => void;
+}
