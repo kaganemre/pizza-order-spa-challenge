@@ -4,6 +4,8 @@ export type PizzaSize = "Küçük" | "Orta" | "Büyük";
 
 export type PizzaThickness = "İnce" | "Orta" | "Kalın";
 
+export type ValidatableField = "isim" | "malzeme";
+
 export interface OrderFormData {
   boyut: PizzaSize;
   kalinlik: PizzaThickness;
@@ -15,4 +17,9 @@ export interface OrderFormData {
 
 export interface OrderFormProps {
   onSubmit: (form: OrderFormData, isValid: boolean) => void;
+}
+
+export interface OrderFormErrors {
+  isim: boolean;
+  malzeme: boolean;
 }

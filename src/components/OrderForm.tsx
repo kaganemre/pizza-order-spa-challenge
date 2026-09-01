@@ -1,8 +1,11 @@
 import { validateName, validateIngredients } from "../validators/orderValidator";
 import React, { useState } from "react";
+import type { MouseEvent, ChangeEvent, FormEvent } from "react";
+import type { Ingredient } from "../types/ingredient";
+import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize } from "../types/orderForm";
 import { Input, FormFeedback } from "reactstrap";
 
-const malzemeListe = [
+const malzemeListe: Ingredient[] = [
   { name: "Pepperoni", malzeme: "Pepperoni", isChecked: true },
   { name: "Sosis", malzeme: "Sosis", isChecked: true },
   { name: "Kanada Jambonu", malzeme: "Kanada Jambonu", isChecked: false },
@@ -19,7 +22,7 @@ const malzemeListe = [
   { name: "Kabak", malzeme: "Kabak", isChecked: false },
 ];
 
-const formData = {
+const formData: OrderFormData = {
   boyut: "Orta",
   kalinlik: "Orta",
   malzeme: malzemeListe.filter((m) => m.isChecked),
@@ -33,25 +36,25 @@ const errorMessages = {
   malzeme: "Malzeme en az 4 en fazla da 10 adet seçilebilir.",
 };
 
-const boyut = ["Küçük", "Orta", "Büyük"];
+const boyut: PizzaSize[] = ["Küçük", "Orta", "Büyük"];
 
-export default function OrderForm({ onSubmit }) {
-  const [form, setForm] = useState(formData);
-  const [malzemeler, setMalzemeler] = useState(malzemeListe);
-  const [errors, setErrors] = useState({
-    isim: null,
+export default function OrderForm({ onSubmit }: OrderFormProps) {
+  const [form, setForm] = useState<OrderFormData>(formData);
+  const [malzemeler, setMalzemeler] = useState<Ingredient[]>(malzemeListe);
+  const [errors, setErrors] = useState<OrderFormErrors>({
+    isim: false,
     malzeme: true,
   });
 
-  const handleQuantityChange = (event) => {
-    const { id } = event.target;
+  const handleQuantityChange = (event: MouseEvent<HTMLButtonElement>) => {
+    const { id } = event.currentTarget;
 
     const value = id === "increase" ? form.adet + 1 : form.adet > 1 ? form.adet - 1 : 1;
 
     setForm({ ...form, adet: value });
   }
 
-  const handleIngredientChange = (event) => {
+  const handleIngredientChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
     const updatedIngredients = [...malzemeler];
@@ -76,15 +79,17 @@ export default function OrderForm({ onSubmit }) {
     validateField("malzeme", selectedIngredients);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
 
     setForm({ ...form, [name]: value });
 
-    validateField(name, value);
+    if (name === "isim" || name === "malzeme") {
+      validateField(name, value);
+    }
   };
 
-  const validateField = (name, value) => {
+  const validateField = (name: ValidatableField, value: string | Ingredient[]) => {
     let isValid = true;
 
     if (name === "isim") {
@@ -104,7 +109,7 @@ export default function OrderForm({ onSubmit }) {
 
   const totalPrice = ingredientPrice + 85.5 * form.adet;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(form, isValid);
   };
@@ -195,7 +200,6 @@ export default function OrderForm({ onSubmit }) {
                   return (
                     <div key={i} className="col mb-3">
                       <input
-                        key={m}
                         type="checkbox"
                         id={m.malzeme}
                         name="malzeme"
