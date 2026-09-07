@@ -92,9 +92,9 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
   const validateField = (name: ValidatableField, value: string | Ingredient[]) => {
     let isValid = true;
 
-    if (name === "isim") {
+    if (name === "isim" && typeof value === "string") {
       isValid = validateName(value);
-    } else if (name === "malzeme") {
+    } else if (name === "malzeme" && Array.isArray(value)) {
       isValid = validateIngredients(value);
     }
 
