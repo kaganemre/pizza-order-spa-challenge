@@ -84,7 +84,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
 
     setForm({ ...form, [name]: value });
 
-    if (name === "isim" || name === "malzeme") {
+    if (name === "isim") {
       validateField(name, value);
     }
   };
