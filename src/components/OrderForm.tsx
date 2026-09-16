@@ -2,7 +2,7 @@ import { validateName, validateIngredients } from "../validators/orderValidator"
 import React, { useState } from "react";
 import type { MouseEvent, ChangeEvent, FormEvent } from "react";
 import type { Ingredient } from "../types/ingredient";
-import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize } from "../types/orderForm";
+import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize, PizzaThickness } from "../types/orderForm";
 import { Input, FormFeedback } from "reactstrap";
 
 const malzemeListe: Ingredient[] = [
@@ -21,6 +21,14 @@ const malzemeListe: Ingredient[] = [
   { name: "Ananas", malzeme: "Ananas", isChecked: true },
   { name: "Kabak", malzeme: "Kabak", isChecked: false },
 ];
+
+const isPizzaSize = (value: string): value is PizzaSize => {
+  return value === "Küçük" || value === "Orta" || value === "Büyük";
+};
+
+const isPizzaThickness = (value: string): value is PizzaThickness => {
+  return value === "İnce" || value === "Orta" || value === "Kalın";
+};
 
 const formData: OrderFormData = {
   boyut: "Orta",
@@ -82,10 +90,24 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
 
-    setForm({ ...form, [name]: value });
+    if (name === "boyut" && isPizzaSize(value)) {
+      setForm({ ...form, boyut: value });
+      return;
+    }
+
+    if (name === "kalinlik" && isPizzaThickness(value)) {
+      setForm({ ...form, kalinlik: value });
+      return;
+    }
 
     if (name === "isim") {
+      setForm({ ...form, isim: value });
       validateField(name, value);
+      return;
+    }
+
+    if (name === "not") {
+      setForm({ ...form, not: value });
     }
   };
 
