@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import Footer from "./Footer";
+import type { SuccessProps } from "../types/orderResponse";
 
-export default function Success({ apiResponse }) {
+export default function Success({ apiResponse }: SuccessProps) {
   const response = apiResponse[0];
   console.log(response);
 
