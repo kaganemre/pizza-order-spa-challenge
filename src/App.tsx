@@ -9,12 +9,7 @@ import type { OrderResponse } from "./types/orderResponse";
 
 function App() {
   const [apiResponse, setApiResponse] = useState<OrderResponse[]>([]);
-  let history = useHistory();
-
-  const headers = {
-    "x-api-key": "YOUR_API_KEY",
-    "Content-Type": "application/json"
-  };
+  const history = useHistory();
 
   const handleSubmit = (form: OrderFormData, isValid: boolean) => {
     if (isValid) {
