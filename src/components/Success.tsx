@@ -4,11 +4,14 @@ import type { SuccessProps } from "../types/orderResponse";
 
 export default function Success({ apiResponse }: SuccessProps) {
   const response = apiResponse[0];
-  console.log(response);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if(!response) {
+    return null;
+  }
 
   return (
     <>

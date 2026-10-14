@@ -1,4 +1,4 @@
-import type { Ingredient, } from "./ingredient";
+import type { Ingredient } from "./ingredient";
 
 export interface OrderResponse {
   boyut: string;
