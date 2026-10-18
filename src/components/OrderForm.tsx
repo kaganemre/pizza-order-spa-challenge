@@ -1,26 +1,10 @@
 import { validateName, validateIngredients } from "../validators/orderValidator";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { MouseEvent, ChangeEvent, FormEvent } from "react";
 import type { Ingredient } from "../types/ingredient";
 import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize, PizzaThickness } from "../types/orderForm";
+import { ingredientList, pizzaSizes, errorMessages} from "../constants/orderForm";
 import { Input, FormFeedback } from "reactstrap";
-
-const malzemeListe: Ingredient[] = [
-  { name: "Pepperoni", malzeme: "Pepperoni", isChecked: true },
-  { name: "Sosis", malzeme: "Sosis", isChecked: true },
-  { name: "Kanada Jambonu", malzeme: "Kanada Jambonu", isChecked: false },
-  { name: "Tavuk Izgara", malzeme: "Tavuk Izgara", isChecked: false },
-  { name: "Soğan", malzeme: "Soğan", isChecked: false },
-  { name: "Domates", malzeme: "Domates", isChecked: false },
-  { name: "Mısır", malzeme: "Mısır", isChecked: true },
-  { name: "Brokoli", malzeme: "Brokoli", isChecked: false },
-  { name: "Jalepeno", malzeme: "Jalepeno", isChecked: true },
-  { name: "Sarımsak", malzeme: "Sarımsak", isChecked: false },
-  { name: "Biber", malzeme: "Biber", isChecked: false },
-  { name: "Sucuk", malzeme: "Sucuk", isChecked: false },
-  { name: "Ananas", malzeme: "Ananas", isChecked: true },
-  { name: "Kabak", malzeme: "Kabak", isChecked: false },
-];
 
 const isPizzaSize = (value: string): value is PizzaSize => {
   return value === "Küçük" || value === "Orta" || value === "Büyük";
@@ -33,22 +17,15 @@ const isPizzaThickness = (value: string): value is PizzaThickness => {
 const formData: OrderFormData = {
   boyut: "Orta",
   kalinlik: "Orta",
-  malzeme: malzemeListe.filter((m) => m.isChecked),
+  malzeme: ingredientList.filter((m) => m.isChecked),
   isim: "",
   not: "",
   adet: 1,
 };
 
-const errorMessages = {
-  isim: "En az 3 karakter içermelidir.",
-  malzeme: "Malzeme en az 4 en fazla da 10 adet seçilebilir.",
-};
-
-const boyut: PizzaSize[] = ["Küçük", "Orta", "Büyük"];
-
 export default function OrderForm({ onSubmit }: OrderFormProps) {
   const [form, setForm] = useState<OrderFormData>(formData);
-  const [malzemeler, setMalzemeler] = useState<Ingredient[]>(malzemeListe);
+  const [malzemeler, setMalzemeler] = useState<Ingredient[]>(ingredientList);
   const [errors, setErrors] = useState<OrderFormErrors>({
     isim: false,
     malzeme: true,
@@ -166,7 +143,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
                 <h6 className="mb-3">
                   Boyut Seç<span className="red-star">*</span>
                 </h6>
-                {boyut.map((b, i) => (
+                {pizzaSizes.map((b, i) => (
                   <div key={i} className="mb-3">
                     <input
                       type="radio"
