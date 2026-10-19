@@ -4,6 +4,7 @@ import type { MouseEvent, ChangeEvent, FormEvent } from "react";
 import type { Ingredient } from "../types/ingredient";
 import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize, PizzaThickness } from "../types/orderForm";
 import { ingredientList, pizzaSizes, errorMessages} from "../constants/orderForm";
+import { calculateIngredientPrice, calculateTotalPrice } from "../utils/orderPrice";
 import { Input, FormFeedback } from "reactstrap";
 
 const isPizzaSize = (value: string): value is PizzaSize => {
@@ -102,11 +103,9 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
 
   const isValid = Object.values(errors).every(Boolean);
 
-  const selectedIngredientCount = malzemeler.filter(ingredient => ingredient.isChecked).length;
-
-  const ingredientPrice = selectedIngredientCount * 5;
-
-  const totalPrice = ingredientPrice + 85.5 * form.adet;
+  const ingredientPrice = calculateIngredientPrice(malzemeler);
+  
+  const totalPrice = calculateTotalPrice(malzemeler, form.adet);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
