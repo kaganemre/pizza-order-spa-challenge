@@ -1,9 +1,9 @@
-import { validateName, validateIngredients } from "../validators/orderValidator";
+import { validateField } from "../validators/orderValidator";
 import { useState } from "react";
 import type { MouseEvent, ChangeEvent, FormEvent } from "react";
 import type { Ingredient } from "../types/ingredient";
 import type { OrderFormData, OrderFormProps, ValidatableField, OrderFormErrors, PizzaSize, PizzaThickness } from "../types/orderForm";
-import { ingredientList, pizzaSizes, errorMessages} from "../constants/orderForm";
+import { ingredientList, pizzaSizes, errorMessages } from "../constants/orderForm";
 import { calculateIngredientPrice, calculateTotalPrice } from "../utils/orderPrice";
 import { Input, FormFeedback } from "reactstrap";
 
@@ -62,7 +62,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
       malzeme: selectedIngredients,
     });
 
-    validateField("malzeme", selectedIngredients);
+    handleValidation("malzeme", selectedIngredients);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -80,7 +80,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
 
     if (name === "isim") {
       setForm({ ...form, isim: value });
-      validateField(name, value);
+      handleValidation(name, value);
       return;
     }
 
@@ -89,22 +89,19 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
     }
   };
 
-  const validateField = (name: ValidatableField, value: string | Ingredient[]) => {
-    let isValid = true;
+  const handleValidation = (name: ValidatableField, value: string | Ingredient[]) => {
+    const isValid = validateField(name, value);
 
-    if (name === "isim" && typeof value === "string") {
-      isValid = validateName(value);
-    } else if (name === "malzeme" && Array.isArray(value)) {
-      isValid = validateIngredients(value);
-    }
-
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: isValid }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: isValid,
+    }));
   };
 
   const isValid = Object.values(errors).every(Boolean);
 
   const ingredientPrice = calculateIngredientPrice(malzemeler);
-  
+
   const totalPrice = calculateTotalPrice(malzemeler, form.adet);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
