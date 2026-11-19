@@ -26,7 +26,6 @@ const formData: OrderFormData = {
 
 export default function OrderForm({ onSubmit }: OrderFormProps) {
   const [form, setForm] = useState<OrderFormData>(formData);
-  const [malzemeler, setMalzemeler] = useState<Ingredient[]>(ingredientList);
   const [errors, setErrors] = useState<OrderFormErrors>({
     isim: false,
     malzeme: true,
@@ -43,19 +42,15 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
   const handleIngredientChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
-    const updatedIngredients = [...malzemeler];
-    const ingredientIndex = updatedIngredients.findIndex((ingredient) => ingredient.malzeme === value);
-
-    updatedIngredients[ingredientIndex] = {
-      ...updatedIngredients[ingredientIndex],
-      isChecked: checked,
-    };
-
-    setMalzemeler(updatedIngredients);
-
-    const selectedIngredients = updatedIngredients.filter(
-      (ingredient) => ingredient.isChecked
+    const ingredient = ingredientList.find(
+      (item) => item.malzeme === value
     );
+
+    if (!ingredient) return;
+
+    const selectedIngredients = checked
+      ? [...form.malzeme, { ...ingredient, isChecked: true }]
+      : form.malzeme.filter((item) => item.malzeme !== value);
 
     setForm({
       ...form,
@@ -100,9 +95,9 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
 
   const isValid = Object.values(errors).every(Boolean);
 
-  const ingredientPrice = calculateIngredientPrice(malzemeler);
+  const ingredientPrice = calculateIngredientPrice(form.malzeme);
 
-  const totalPrice = calculateTotalPrice(malzemeler, form.adet);
+  const totalPrice = calculateTotalPrice(form.malzeme, form.adet);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -191,7 +186,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
                   color: "#5F5F5F",
                 }}
               >
-                {malzemeler.map((m, i) => {
+                {ingredientList.map((m, i) => {
                   return (
                     <div key={i} className="col mb-3">
                       <input
@@ -200,7 +195,7 @@ export default function OrderForm({ onSubmit }: OrderFormProps) {
                         name="malzeme"
                         value={m.malzeme}
                         onChange={handleIngredientChange}
-                        checked={m.isChecked}
+                        checked={form.malzeme.some((ingredient) => ingredient.malzeme === m.malzeme)}
                       />
                       <label htmlFor={m.malzeme} className="ms-3">
                         {m.name}
